@@ -1,9 +1,13 @@
 // SBA 319 - MongoDB Database Application - Cybersecurity Incident Tracker API
 import express from "express";
 import dotenv from "dotenv";
+import connectDB from "./config/db.js";
 
-// Loads the environment variables from the .env file.
+// Loads the environment variables from the .env file
 dotenv.config();
+
+// Connect to MongoDB
+connectDB();
 
 const app = express();
 const PORT = process.env.PORT;
