@@ -1,0 +1,29 @@
+// SBA 319 - MongoDB Database Application - Cybersecurity Incident Tracker API
+import express from "express";
+import dotenv from "dotenv";
+
+// Loads the environment variables from the .env file.
+dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT;
+
+// parse the data to JSON (for POST and PUT requests)
+app.use(express.json());
+
+// Confirms the API is running.
+app.get("/", (req, res) => {
+  res.json({
+    message: "Welcome to the Cybersecurity Incident Tracker API",
+    status: "Server is running successfully",
+  });
+});
+
+// error handling middleware
+app.use((err, req, res, next) => {
+    res.status(400).json({ error: err.message })
+})
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
