@@ -22,6 +22,34 @@ const incidentSchema = new mongoose.Schema({
     enum: ["Low", "Medium", "High", "Critical"],
     default: "Low",
   },
+
+  status: {
+    type: String,
+    required: [true, "Status is required"],
+    enum: ["Open", "In Progress", "Resolved", "Closed"],
+    default: "Open",
+  },
+
+  category: {
+    type: String,
+    required: [true, "Category is required"],
+    enum: [
+      "Phishing",
+      "Malware",
+      "Hacking",
+      "Unauthorized Access",
+      "Data Exposure",
+      "Network Issue",
+      "Other",
+    ],
+    default: "Other",
+  },
+
+  reportedBy: {
+    type: String,
+    required: [true, "Reporter name is required"],
+    trim: true,
+  },
 });
 
 const Incident = mongoose.model("Incident", incidentSchema);
