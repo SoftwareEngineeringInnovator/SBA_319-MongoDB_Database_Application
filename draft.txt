@@ -1,0 +1,41 @@
+    email: {
+      type: String,
+      required: [true, "User email is required"],
+      trim: true,
+      lowercase: true,
+      unique: true,
+    },
+
+    role: {
+      type: String,
+      required: [true, "User role is required"],
+      enum: ["Reporter", "SOC Analyst", "Manager", "Admin"],
+      default: "Reporter",
+    },
+
+    department: {
+      type: String,
+      required: [true, "Department is required"],
+      trim: true,
+    },
+
+    // Index Schema for user
+userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ role: 1 });
+
+
+FROM userRoutes.js
+
+// GET user route
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error getting users",
+      error: error.message,
+    });
+  }
+});
