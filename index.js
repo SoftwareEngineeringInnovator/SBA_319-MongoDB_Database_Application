@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import incidentRoutes from "./routes/incidentRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
 
 // Loads the environment variables from the .env file
 dotenv.config();
@@ -26,6 +27,9 @@ app.get("/", (req, res) => {
 
 // Incident routes
 app.use("/api/incidents", incidentRoutes);
+
+// User routes
+app.use("/api/users", userRoutes);
 
 // error handling middleware
 app.use((err, req, res, next) => {
