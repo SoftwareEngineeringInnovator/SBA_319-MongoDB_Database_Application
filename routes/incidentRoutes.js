@@ -1,5 +1,6 @@
 // Incident routes- Test the Incident model using Thunder Client
 import express from "express";
+import mongoose from "mongoose";
 import Incident from "../models/Incident.js";
 
 const router = express.Router();
@@ -14,6 +15,26 @@ router.get("/", async (req, res) => {
     res.status(500).json({
       message: "Error getting incidents",
       error: error.message,
+    });
+  }
+});
+
+// GET one incident by ID
+router.get("/:id", async (req, res) => {
+  try {
+
+    const incident = await Incident.findById(req.params.id);
+
+    if (!incident) {
+      return res.status(404).json({
+        message: "Incident not found",
+      });
+    }
+
+    res.status(200).json(incident);
+  } catch (error) {
+    res.status(404).json({
+      message: "Wrong Incident Number",
     });
   }
 });
