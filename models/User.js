@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema(
             required: [true, "User email is required"],
             trim: true,
             lowercase: true,
-            unique: true,
         },
 
         role: {
@@ -29,7 +28,6 @@ const userSchema = new mongoose.Schema(
             required: [true, "Department is required"],
             trim: true,
         },
-
     },
 
     {
@@ -37,6 +35,10 @@ const userSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+
+// Index Schema for user
+userSchema.index({ email: 1 }, { unique: true });
+userSchema.index({ role: 1 });
 
 const User = mongoose.model("User", userSchema);
 
