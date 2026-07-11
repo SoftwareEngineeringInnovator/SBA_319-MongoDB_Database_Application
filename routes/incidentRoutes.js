@@ -53,4 +53,32 @@ router.post("/", async (req, res) => {
   }
 });
 
+// PATCH incident route
+router.patch("/:id", async (req, res) => {
+  try {
+    const updatedIncident = await Incident.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        // Validate the incident level for tickets
+        new: true,
+        runValidators: true,
+      }
+    );
+
+    if (!updatedIncident) {
+      return res.status(404).json({
+        message: "Incident not found",
+      });
+    }
+
+    res.status(200).json(updatedIncident);
+  } catch (error) {
+    res.status(400).json({
+      message: "Error updating incident",
+      error: error.message,
+    });
+  }
+});
+
 export default router;
