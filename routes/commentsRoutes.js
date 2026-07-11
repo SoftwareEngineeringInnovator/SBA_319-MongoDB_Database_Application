@@ -1,6 +1,6 @@
 // Comment routes
 import express from "express";
-import Comment from "../models/Comment.js";
+import Comment from "../models/Comments.js";
 
 const router = express.Router();
 

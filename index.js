@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import incidentRoutes from "./routes/incidentRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-import commentRoutes from "./routes/commentRoutes.js";
+import commentRoutes from "./routes/commentsRoutes.js";
 
 // Loads the environment variables from the .env file
 dotenv.config();
@@ -31,6 +31,9 @@ app.use("/api/incidents", incidentRoutes);
 
 // User routes
 app.use("/api/users", userRoutes);
+
+// Comment routes
+app.use("/api/comments", commentRoutes);
 
 // error handling middleware
 app.use((err, req, res, next) => {
