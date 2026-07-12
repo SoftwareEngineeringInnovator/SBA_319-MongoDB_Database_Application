@@ -104,4 +104,21 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Test route for MongoDB validation
+router.post("/test-db-validation", async (req, res) => {
+  try {
+    const result = await Incident.collection.insertOne(req.body);
+
+    res.status(201).json({
+      message: "Incident ticket passed MongoDB validation and was submitted successfully",
+      insertedId: result.insertedId,
+    });
+  } catch (error) {
+    res.status(400).json({
+      message: "Incident ticket did not pass MongoDB validation. Please check the required fields and try again",
+      error: error.message,
+    });
+  }
+});
+
 export default router;
