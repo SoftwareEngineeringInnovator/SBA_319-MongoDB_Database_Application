@@ -1,41 +1,39 @@
-    email: {
-      type: String,
-      required: [true, "User email is required"],
-      trim: true,
-      lowercase: true,
-      unique: true,
-    },
+// Comment routes
+// These routes let us test the Comment model from Thunder Client.
 
-    role: {
-      type: String,
-      required: [true, "User role is required"],
-      enum: ["Reporter", "SOC Analyst", "Manager", "Admin"],
-      default: "Reporter",
-    },
+import express from "express";
+import Comment from "../models/Comment.js";
 
-    department: {
-      type: String,
-      required: [true, "Department is required"],
-      trim: true,
-    },
+const router = express.Router();
 
-    // Index Schema for user
-userSchema.index({ email: 1 }, { unique: true });
-userSchema.index({ role: 1 });
-
-
-FROM userRoutes.js
-
-// GET user route
+// GET all comments
+// This helps us confirm that comments are being saved in MongoDB.
 router.get("/", async (req, res) => {
   try {
-    const users = await User.find();
+    const comments = await Comment.find();
 
-    res.status(200).json(users);
+    res.status(200).json(comments);
   } catch (error) {
     res.status(500).json({
-      message: "Error getting users",
+      message: "Error getting comments",
       error: error.message,
     });
   }
 });
+
+// POST a new comment
+// For now we are only testing the message field.
+router.post("/", async (req, res) => {
+  try {
+    const newComment = await Comment.create(req.body);
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    res.status(400).json({
+      message: "Error creating comment",
+      error: error.message,
+    });
+  }
+});
+
+export default router;

@@ -9,6 +9,12 @@ const commentSchema = new mongoose.Schema(
             trim: true,
             minlength: [5, "Comment message must be at least 5 characters long"],
         },
+
+        incidentId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Incident",
+            required: [true, "Incident ID is required"],
+        },
     },
 
     {
