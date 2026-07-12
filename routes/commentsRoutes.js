@@ -7,7 +7,10 @@ const router = express.Router();
 // GET comment route
 router.get("/", async (req, res) => {
   try {
-    const comments = await Comment.find();
+    const comments = await Comment.find()
+    // Following the Mongoose populate documentation, this lets us show helpful user and incident details instead of only returning their ObjectId values.
+      .populate("incidentId", "title severity status")
+      .populate("userId", "name email role");
 
     res.status(200).json(comments);
   } catch (error) {
