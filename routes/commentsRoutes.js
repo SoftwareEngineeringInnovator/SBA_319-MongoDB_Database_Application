@@ -18,7 +18,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
 // POST comment route
 router.post("/", async (req, res) => {
   try {

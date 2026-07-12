@@ -15,6 +15,12 @@ const commentSchema = new mongoose.Schema(
             ref: "Incident",
             required: [true, "Incident ID is required"],
         },
+
+        userId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: [true, "User ID is required"],
+        },
     },
 
     {
