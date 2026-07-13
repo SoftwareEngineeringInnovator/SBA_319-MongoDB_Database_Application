@@ -2,6 +2,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import User from "../models/User.js";
+import Incident from "../models/Incident.js";
 
 dotenv.config();
 
@@ -15,8 +16,9 @@ const seedDatabase = async () => {
 
         // Clears the old data
         await User.deleteMany();
+        await Incident.deleteMany();
 
-        console.log("Old users removed");
+        console.log("Old users and incidents removed");
 
         const users = await User.insertMany([
             {
@@ -26,6 +28,24 @@ const seedDatabase = async () => {
                 department: "Cybersecurity",
             },
         ]);
+
+        console.log(`${users.length} users inserted.`);
+
+        const incidents = await Incident.insertMany([
+            {
+                title: "Phishing Email Reported",
+                description: "A user reported a suspicious email asking for password reset information.",
+                severity: "Medium",
+                status: "Open",
+                category: "Phishing",
+                reportedBy: "Samuel Adams",
+                assignedTo: "SOC Team",
+                affectedSystem: "Employee Email",
+                resolutionNotes: "Initial review started.",
+            },
+        ]);
+
+        console.log(`${incidents.length} incidents inserted.`);
 
         console.log("Seed data completed successfully.");
     } catch (error) {
