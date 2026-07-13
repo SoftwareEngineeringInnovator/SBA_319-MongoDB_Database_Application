@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import User from "../models/User.js";
 import Incident from "../models/Incident.js";
+import Comment from "../models/Comments.js";
 
 dotenv.config();
 
@@ -17,8 +18,9 @@ const seedDatabase = async () => {
         // Clears the old data
         await User.deleteMany();
         await Incident.deleteMany();
+        await Comment.deleteMany();
 
-        console.log("Old users and incidents removed");
+        console.log("Old users, incidents, and comments removed");
 
         const users = await User.insertMany([
             {
@@ -46,6 +48,16 @@ const seedDatabase = async () => {
         ]);
 
         console.log(`${incidents.length} incidents inserted.`);
+
+        const comments = await Comment.insertMany([
+      {
+        message: "The incident was received and assigned for review.",
+        incidentId: incidents[0]._id,
+        userId: users[0]._id,
+      },
+    ]);
+
+    console.log(`${comments.length} comments inserted.`);
 
         console.log("Seed data completed successfully.");
     } catch (error) {
